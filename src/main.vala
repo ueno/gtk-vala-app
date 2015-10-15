@@ -31,7 +31,7 @@ class MyApplication : Gtk.Application
     }
 
     construct {
-        GLib.Environment.set_application_name(_("My Vala Application"));
+        GLib.Environment.set_application_name (_("My Vala Application"));
     }
 
     public override void startup () {
@@ -52,18 +52,18 @@ class MyApplication : Gtk.Application
         builder.add_from_resource (
             "/com/example/Gtk/ValaApplication/app-menu.ui");
 
-        var menu = (GLib.MenuModel) builder.get_object("app-menu");
+        var menu = (GLib.MenuModel) builder.get_object ("app-menu");
         this.set_app_menu (menu);
 
-        message("%s", _("My Vala Application started"));
+        message ("%s", _("My Vala Application started"));
     }
 
     public override void activate () {
-        (new MainWindow(this)).show();
+        (new MainWindow (this)).show ();
     }
 
     public override void shutdown () {
-        message("%s", _("My Vala Application exiting"));
+        message ("%s", _("My Vala Application exiting"));
         base.shutdown ();
     }
 }

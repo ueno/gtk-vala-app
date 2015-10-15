@@ -42,8 +42,10 @@ class MainWindow : Gtk.ApplicationWindow {
 	private MainView _view;
 
     public MainWindow (Gtk.Application app) {
-		Object (application: app, title: GLib.Environment.get_application_name(),
-				default_width: 640, default_height: 480);
+		Object (application: app,
+                title: GLib.Environment.get_application_name (),
+				default_width: 640,
+                default_height: 480);
 
 		var action = new GLib.SimpleAction ("new", null);
 		action.activate.connect (() => { this._new (); });
@@ -103,8 +105,8 @@ class MainWindow : Gtk.ApplicationWindow {
 		dialog.set_modal (true);
 		dialog.set_transient_for (this);
 
-        dialog.show();
-        dialog.response.connect(() => { dialog.destroy(); });
+        dialog.show ();
+        dialog.response.connect (() => { dialog.destroy (); });
     }
 }
 
@@ -121,14 +123,14 @@ class MainView : Gtk.Stack {
         this._settings = new GLib.Settings (Config.PACKAGE_NAME);
 
         this._button_one = this.add_page ("one", _("First page"), "");
-        this._button_one.clicked.connect(() => {
+        this._button_one.clicked.connect (() => {
 				this.visible_child_name = "two";
 			});
         this.sync_label ();
         this._settings.changed["show-exclamation-mark"].connect(this.sync_label);
 
         var two = this.add_page ("two", _("Second page"), _("What did you expect?"));
-        two.clicked.connect(() => { this.visible_child_name = "one"; });
+        two.clicked.connect (() => { this.visible_child_name = "one"; });
     }
 
     Gtk.Button add_page (string name, string label, string button) {
