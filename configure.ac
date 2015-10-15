@@ -1,5 +1,5 @@
 AC_PREREQ(2.63)
-AC_INIT([com.example.Gtk.ValaApplication], [0.1],
+AC_INIT([gtk-vala-app], [0.1],
         [bugs@vala-app.example.com],
         [gtk-vala-app],
         [http://www.example.com/gtk-vala-app/])
@@ -7,16 +7,19 @@ AC_INIT([com.example.Gtk.ValaApplication], [0.1],
 AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_MACRO_DIR([m4])
 
-AM_INIT_AUTOMAKE([1.12 dist-xz no-dist-gzip foreign tar-ustar no-define serial-tests -Wno-portability])
-# revert automake using PACKAGE_TARNAME instead of PACKAGE_NAME
-AC_SUBST([PACKAGE], [$PACKAGE_NAME])
+PACKAGE_DESKTOP_NAME=com.example.Gtk.ValaApplication
+AC_SUBST(PACKAGE_DESKTOP_NAME)
+AC_DEFINE_UNQUOTED(PACKAGE_DESKTOP_NAME, "$PACKAGE_DESKTOP_NAME",
+		   [The desktop ID of the application.])
 
-PACKAGE_DBUS_PATH=/`echo $PACKAGE_NAME | sed 's,\.,/,g'`
-AC_SUBST([PACKAGE_DBUS_PATH], [$PACKAGE_DBUS_PATH])
+AM_INIT_AUTOMAKE([1.12 dist-xz no-dist-gzip foreign tar-ustar no-define serial-tests -Wno-portability])
+
+PACKAGE_DBUS_PATH=/`echo $PACKAGE_DESKTOP_NAME | sed 's,\.,/,g'`
+AC_SUBST(PACKAGE_DBUS_PATH)
 
 m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([yes])])
 
-GETTEXT_PACKAGE=$PACKAGE_NAME
+GETTEXT_PACKAGE=$PACKAGE_DESKTOP_NAME
 AC_SUBST(GETTEXT_PACKAGE)
 AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE, "$GETTEXT_PACKAGE",
                    [The prefix for our gettext translation domains.])

@@ -2,45 +2,46 @@
 # 5 different directory declarations
 SUBDIRS = icons
 
-app_resource_files = $(shell $(GLIB_COMPILE_RESOURCES) --sourcedir=$(srcdir) --generate-dependencies $(srcdir)/com.example.Gtk.ValaApplication.data.gresource.xml)
+resource_files = $(shell $(GLIB_COMPILE_RESOURCES) --sourcedir=$(srcdir) --generate-dependencies $(srcdir)/$(PACKAGE_DESKTOP_NAME).data.gresource.xml)
 
 appsdir = $(datadir)/applications
-apps_DATA = com.example.Gtk.ValaApplication.desktop
+apps_DATA = $(PACKAGE_DESKTOP_NAME).desktop
 
 @INTLTOOL_DESKTOP_RULE@
 
-gsettings_SCHEMAS = com.example.Gtk.ValaApplication.gschema.xml
+gsettings_SCHEMAS = $(PACKAGE_DESKTOP_NAME).gschema.xml
 
 @GSETTINGS_RULES@
 
-appstream_XML = com.example.Gtk.ValaApplication.appdata.xml
+appstream_XML = $(PACKAGE_DESKTOP_NAME).appdata.xml
 
 @APPSTREAM_XML_RULES@
 @INTLTOOL_XML_RULE@
 
-com.example.Gtk.ValaApplication.service: com.example.Gtk.ValaApplication.service.in
+$(PACKAGE_DESKTOP_NAME).service: $(PACKAGE_DESKTOP_NAME).service.in
 	$(AM_V_GEN) sed \
 		-e "s|[@]PACKAGE_NAME@|$(PACKAGE_NAME)|g" \
 		-e "s|[@]pkgdatadir@|$(pkgdatadir)|g" \
 		-e "s|[@]pkglibdir@|$(pkglibdir)|g" \
+		-e "s|[@]bindir@|$(bindir)|g" \
 		$< > $@
 
 servicedir = $(datadir)/dbus-1/services
-service_DATA = com.example.Gtk.ValaApplication.service
+service_DATA = $(PACKAGE_DESKTOP_NAME).service
 
 EXTRA_DIST = \
-	com.example.Gtk.ValaApplication.desktop.in \
-	com.example.Gtk.ValaApplication.service.in \
-	com.example.Gtk.ValaApplication.data.gresource.xml \
+	$(PACKAGE_DESKTOP_NAME).desktop.in \
+	$(PACKAGE_DESKTOP_NAME).service.in \
+	$(PACKAGE_DESKTOP_NAME).data.gresource.xml \
 	$(gsettings_SCHEMAS) \
-	com.example.Gtk.ValaApplication.appdata.xml.in \
-	$(app_resource_files) \
+	$(PACKAGE_DESKTOP_NAME).appdata.xml.in \
+	$(resource_files) \
 	$(NULL)
 
 CLEANFILES = \
-	com.example.Gtk.ValaApplication.service \
-	com.example.Gtk.ValaApplication.appdata.xml \
-	com.example.Gtk.ValaApplication.appdata.valid \
+	$(PACKAGE_DESKTOP_NAME).service \
+	$(PACKAGE_DESKTOP_NAME).appdata.xml \
+	$(PACKAGE_DESKTOP_NAME).appdata.valid \
 	$(apps_DATA) \
 	*.valid \
 	gschemas.compiled \
