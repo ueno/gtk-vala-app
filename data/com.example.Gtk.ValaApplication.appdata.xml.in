@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component type="desktop">
   <id>com.example.Gtk.ValaApplication.desktop</id>
+  <name>Gtk+ Vala application</name>
+  <summary>A sample Gtk+ Vala application</summary>
   <licence>CC0</licence>
   <description>
     <_p>
